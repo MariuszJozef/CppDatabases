@@ -5,6 +5,26 @@
 namespace Code::Databases
 {
 
+void DatabaseMsSqlServer::CreateDatabase(soci::session& sql, const std::string& databaseName)
+{
+    // TODO
+}
+
+void DatabaseMsSqlServer::CreateTableForRecord1(soci::session& sql, const std::string& tableName)
+{
+
+}
+
+void DatabaseMsSqlServer::CreateTableForRecord2(soci::session& sql, const std::string& tableName)
+{
+
+}
+
+void DatabaseMsSqlServer::CreateTableForRecord3(soci::session& sql, const std::string& tableName)
+{
+
+}
+
 void DatabaseMsSqlServer::ExecuteQueries1()
 {
     try {

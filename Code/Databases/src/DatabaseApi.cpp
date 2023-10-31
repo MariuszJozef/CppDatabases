@@ -19,6 +19,8 @@ void QueryChosenDatabase(Backend backend)
         std::cout << "QueryChosenDatabase --- Backend::Sqlite\n";
         DatabaseSqlite databaseSqlite;
         databaseSqlite.ExecuteQueries1();
+        databaseSqlite.ExecuteQueries2();
+        databaseSqlite.ExecuteQueries3();
         break;
     }
     case Backend::MySql:
@@ -26,6 +28,8 @@ void QueryChosenDatabase(Backend backend)
         std::cout << "QueryChosenDatabase --- Backend::MySql\n";
         DatabaseMySql databaseMySql;
         databaseMySql.ExecuteQueries1();
+        databaseMySql.ExecuteQueries2();
+        databaseMySql.ExecuteQueries3();
         break;
     }
     case Backend::PostgreSql:
@@ -33,6 +37,8 @@ void QueryChosenDatabase(Backend backend)
         std::cout << "QueryChosenDatabase --- Backend::PostgreSql\n";
         DatabasePostgreSql databasePostgreSql;
         databasePostgreSql.ExecuteQueries1();
+        databasePostgreSql.ExecuteQueries2();
+        databasePostgreSql.ExecuteQueries3();
         break;
     }
     case Backend::MsSqlServer:
@@ -40,6 +46,8 @@ void QueryChosenDatabase(Backend backend)
         std::cout << "QueryChosenDatabase --- Backend::MsSqlServer\n";
         DatabaseMsSqlServer databaseMsSqlServer;
         databaseMsSqlServer.ExecuteQueries1();
+        databaseMsSqlServer.ExecuteQueries2();
+        databaseMsSqlServer.ExecuteQueries3();
     }
     }
 }
