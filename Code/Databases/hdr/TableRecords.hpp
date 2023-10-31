@@ -33,7 +33,7 @@ struct Record1 final
 {
     bool trueOrFalse {};
     char letter {};
-    std::string sentence {};
+    std::string phrase {};
     int number1 {0};
     double number2 {0.0};
 };
@@ -47,7 +47,7 @@ struct Record2 final
 
 struct Record3 final
 {
-    std::optional<std::string> sentence {};
+    std::optional<std::string> phrase {};
     std::optional<int> number1 {0};
     std::optional<double> number2 {0.0};
 };

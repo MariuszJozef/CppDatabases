@@ -75,7 +75,7 @@ std::ostream& operator << (std::ostream& out, const Record1& record)
 {
     out << std::boolalpha << record.trueOrFalse << ", "
         << record.letter << ", "
-        << record.sentence << ", "
+        << record.phrase << ", "
         << record.number1 << ", "
         << record.number2;
 
@@ -93,8 +93,8 @@ std::ostream& operator << (std::ostream& out, const Record2& record)
 
 std::ostream& operator << (std::ostream& out, const Record3& record)
 {
-    if (record.sentence.has_value())
-        out << record.sentence.value() << ", ";
+    if (record.phrase.has_value())
+        out << record.phrase.value() << ", ";
 
     if (record.number1.has_value())
         out << record.number1.value() << ", ";

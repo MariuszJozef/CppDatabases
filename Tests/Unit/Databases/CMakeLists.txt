@@ -72,11 +72,63 @@ else()
 endif()
 
 #[==================================================[
+Find or fetch SOCI library and display its cmake targets
+#]==================================================]
+option(linkSociAsSharedLibrary "OFF to link as static library, ON as dynamic - on Windows the latter requires the *.dll to be copied next to the .exe (this is done in add_subdirectory)" ON)
+
+if(NOT linkSociAsSharedLibrary)
+    message(WARNING "For now SOCI can only be linked as a shared library: use \n\t-D linkSociAsSharedLibrary=ON\nor omit this flag")
+endif()
+
+include(${CMAKE_SOURCE_DIR}/CMakeUtils/FindOrFetch/FindOrFetchSoci.cmake)
+
+get_property(importTargets3 DIRECTORY ${SOURCE_DIR} PROPERTY IMPORTED_TARGETS)
+list(REMOVE_ITEM importTargets3 ${importTargets1} ${importTargets2})
+message(STATUS "importTargets3: ${importTargets3}")
+
+#[==================================================[
+Link executable with libraries
+#]==================================================]
+if(linkSociAsSharedLibrary)
+
+    target_link_libraries(targetUnitTestDatabase 
+        PRIVATE 
+            GTest::gtest_main
+            GTest::gmock_main
+            MySql::MySql
+            SOCI::soci_sqlite3
+            SOCI::soci_mysql
+            SOCI::soci_postgresql
+            SOCI::soci_odbc
+    )
+
+else()
+
+    target_link_libraries(targetUnitTestDatabase 
+        PRIVATE 
+            GTest::gtest_main
+            GTest::gmock_main
+            MySql::MySql
+            SOCI::soci_sqlite3_static
+            SOCI::soci_mysql_static
+            SOCI::soci_postgresql_static
+            SOCI::soci_odbc_static
+    )
+
+endif()
+
+#[==================================================[
 On Windows copy *.dll needed at runtime by the .exe into the same directory as the .exe
 #]==================================================]
-option(isThereDllToLinkToUnitTestDatabase "Switch OFF when not linking any DLLs, otherwise copy <empty> will fail!" OFF)
+option(isThereDllToLinkToDatabase "Switch OFF when not linking any DLLs, otherwise copy <empty> will fail!" ON)
 
-if(WIN32 AND isThereDllToLinkToUnitTestDatabase)
+if(linkSociAsSharedLibrary)
+    set(isThereDllToLinkToDatabase ON)
+else()
+    set(isThereDllToLinkToDatabase OFF)
+endif()
+
+if(WIN32 AND isThereDllToLinkToDatabase)
         add_custom_command(TARGET targetUnitTestDatabase POST_BUILD
             COMMAND ${CMAKE_COMMAND} -E echo "copy: $<TARGET_RUNTIME_DLLS:targetUnitTestDatabase>"
             COMMAND ${CMAKE_COMMAND} -E echo "to:   $<TARGET_FILE_DIR:targetUnitTestDatabase>"
@@ -86,15 +138,6 @@ if(WIN32 AND isThereDllToLinkToUnitTestDatabase)
             COMMAND_EXPAND_LISTS
         )
 endif()
-
-#[==================================================[
-Link executable with found/fetched libraries
-#]==================================================]
-target_link_libraries(targetUnitTestDatabase 
-    PRIVATE 
-        GTest::gtest_main
-        GTest::gmock_main
-)
 
 #[==================================================[
 Run tests

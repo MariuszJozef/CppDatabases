@@ -3,9 +3,9 @@
 #include <iostream>
 #include <iostream>
 #include "DatabaseSqlite.hpp"
-// #include "DatabaseMySql.hpp"
-// #include "DatabasePostgreSql.hpp"
-// #include "DatabaseMsSqlServer.hpp"
+#include "DatabaseMySql.hpp"
+#include "DatabasePostgreSql.hpp"
+#include "DatabaseMsSqlServer.hpp"
 
 namespace Code::Databases
 {
@@ -17,29 +17,29 @@ void QueryChosenDatabase(Backend backend)
     case Backend::Sqlite:
     {
         std::cout << "QueryChosenDatabase --- Backend::Sqlite\n";
-        // DatabaseSqlite databaseSqlite;
-        // databaseSqlite.ExecuteQueries1();
+        DatabaseSqlite databaseSqlite;
+        databaseSqlite.ExecuteQueries1();
         break;
     }
     case Backend::MySql:
     {
         std::cout << "QueryChosenDatabase --- Backend::MySql\n";
-        // DatabaseMySql databaseMySql;
-        // databaseMySql.ExecuteQueries1();
+        DatabaseMySql databaseMySql;
+        databaseMySql.ExecuteQueries1();
         break;
     }
     case Backend::PostgreSql:
     {
         std::cout << "QueryChosenDatabase --- Backend::PostgreSql\n";
-        // DatabasePostgreSql databasePostgreSql;
-        // databasePostgreSql.ExecuteQueries1();
+        DatabasePostgreSql databasePostgreSql;
+        databasePostgreSql.ExecuteQueries1();
         break;
     }
     case Backend::MsSqlServer:
     {
         std::cout << "QueryChosenDatabase --- Backend::MsSqlServer\n";
-        // DatabaseMsSqlServer databaseMsSqlServer;
-        // databaseMsSqlServer.ExecuteQueries1();
+        DatabaseMsSqlServer databaseMsSqlServer;
+        databaseMsSqlServer.ExecuteQueries1();
     }
     }
 }
