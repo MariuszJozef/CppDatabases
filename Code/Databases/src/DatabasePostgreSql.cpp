@@ -93,8 +93,7 @@ void DatabasePostgreSql::CreateTableForRecord3(soci::session& sql, const std::st
 void DatabasePostgreSql::ExecuteQueries1()
 {
 // CAVEAT: Postgres converts to and expects lowercase; better to use snake_case here!
-    // std::string databaseNameLowerCase {"postgresql_database1"};
-    std::string databaseNameLowerCase {"cpp_database1"};
+    std::string databaseNameLowerCase {"postgresql_database1"};
     std::string tableNameLowerCase {"table1"};
     
     try {
@@ -152,8 +151,7 @@ void DatabasePostgreSql::ExecuteQueries2()
 {
     try {
         // CAVEAT: Postgres converts to and expects lowercase!
-        // std::string databaseNameLowerCase {"postgresql_database1"};
-        std::string databaseNameLowerCase {"cpp_database1"};
+        std::string databaseNameLowerCase {"postgresql_database1"};
         std::string connectionStr {"dbname="};
         connectionStr += databaseNameLowerCase;
 /*
@@ -213,8 +211,7 @@ void DatabasePostgreSql::ExecuteQueries3()
 {
     try {
         // CAVEAT: Postgres converts to and expects lowercase!
-        // std::string databaseNameLowerCase {"postgresql_database1"};
-        std::string databaseNameLowerCase {"cpp_database1"};
+        std::string databaseNameLowerCase {"postgresql_database1"};
         std::string connectionStr {"dbname="};
         connectionStr += databaseNameLowerCase;
 /*
