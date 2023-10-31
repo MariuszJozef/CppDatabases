@@ -124,6 +124,12 @@ void DatabaseMySql::ExecuteQueries1()
         CountRecords(sql, tableName);
         DeleteRecord(sql, tableName, 1);
         CountRecords(sql, tableName);
+
+        UpdateRecord1(sql, tableName, 3, {false, 'C', "C__c", 303, 30.03});
+
+        ReadRecords1(sql, tableName);
+        // ReadRow(sql, tableName, 2);
+        // ReadRow(sql, tableName, 2, {"true_or_false", "letter", "phrase"});
     }
     catch (const soci::mysql_soci_error& e)
     {
@@ -170,6 +176,16 @@ void DatabaseMySql::ExecuteQueries2()
         DeleteRecord(sql, tableName, 2);
         CountRecords(sql, tableName);
 
+        UpdateRecord2(sql, tableName, 4, {
+            {1804, 4, 14},
+            {18, 34, 54, -1},
+            {1804, 4, 14, 18, 34, 54}
+        });
+
+        ReadRecords2(sql, tableName);
+        // ReadRow(sql, tableName, 3);
+        // ReadRow(sql, tableName, 3, {"date_only", "time_only", "date_time"});
+
     }
     catch (const soci::mysql_soci_error& e)
     {
@@ -207,6 +223,16 @@ void DatabaseMySql::ExecuteQueries3()
         CountRecords(sql, tableName);
         DeleteRecord(sql, tableName, 3);
         CountRecords(sql, tableName);
+
+        UpdateRecord3(sql, tableName, 5, {"E_e", std::nullopt, 5.05});
+        UpdateRecord3(sql, tableName, 6, {std::nullopt, 66, 6.06});
+        UpdateRecord3(sql, tableName, 7, {std::nullopt, 77, std::nullopt});
+
+        ReadRecords3(sql, tableName);
+        // ReadRow(sql, tableName, 7);
+        // ReadRow(sql, tableName, 6, {"number1", "number2"});
+        // ReadRow(sql, tableName, 2, {"number2"});
+        // ReadRow(sql, tableName, 5, {"number1"});
     }
     catch (const soci::mysql_soci_error& e)
     {

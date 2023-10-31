@@ -132,6 +132,11 @@ void DatabasePostgreSql::ExecuteQueries1()
         DeleteRecord(sql, tableNameLowerCase, 1);
         CountRecords(sql, tableNameLowerCase);
         
+        UpdateRecord1(sql, tableNameLowerCase, 3, {false, 'C', "C__c", 303, 30.03});
+
+        ReadRecords1(sql, tableNameLowerCase);
+        // ReadRow(sql, tableNameLowerCase, 2);
+        // ReadRow(sql, tableNameLowerCase, 2, {"true_or_false", "letter", "phrase"});
     }
     catch (const soci::postgresql_soci_error& e)
     {
@@ -183,6 +188,16 @@ void DatabasePostgreSql::ExecuteQueries2()
         DeleteRecord(sql, tableNameLowerCase, 2);
         CountRecords(sql, tableNameLowerCase);
 
+        UpdateRecord2(sql, tableNameLowerCase, 4, {
+            {1804, 4, 14},
+            {18, 34, 54, -1},
+            {1804, 4, 14, 18, 34, 54}
+        });
+
+        ReadRecords2(sql, tableNameLowerCase);
+        // ReadRow(sql, tableNameLowerCase, 3);
+        // ReadRow(sql, tableNameLowerCase, 3, {"date_only", "time_only", "date_time"});
+
     }
     catch (const soci::postgresql_soci_error& e)
     {
@@ -226,6 +241,15 @@ void DatabasePostgreSql::ExecuteQueries3()
         DeleteRecord(sql, tableNameLowerCase, 3);
         CountRecords(sql, tableNameLowerCase);
 
+        UpdateRecord3(sql, tableNameLowerCase, 5, {"E_e", std::nullopt, 5.05});
+        UpdateRecord3(sql, tableNameLowerCase, 6, {std::nullopt, 66, 6.06});
+        UpdateRecord3(sql, tableNameLowerCase, 7, {std::nullopt, 77, std::nullopt});
+
+        ReadRecords3(sql, tableNameLowerCase);
+        // ReadRow(sql, tableNameLowerCase, 7);
+        // ReadRow(sql, tableNameLowerCase, 6, {"number1", "number2"});
+        // ReadRow(sql, tableNameLowerCase, 2, {"number2"});
+        // ReadRow(sql, tableNameLowerCase, 5, {"number1"});
     }
     catch (const soci::postgresql_soci_error& e)
     {

@@ -263,6 +263,152 @@ Record3 Database::ReadRecord3(soci::session& sql, const std::string& tableName, 
     return record;
 }
 
+void Database::UpdateRecord1(soci::session& sql, const std::string& tableName, int primaryKey, const Record1&& record)
+{
+    // First check that a record with such primary key exists
+    std::stringstream composeQuery;
+    composeQuery << "SELECT primary_key FROM"
+        << " "
+        << tableName
+        << " "
+        << "WHERE primary_key = :primary_key"
+        << ";";
+
+    int foundKey;
+    soci::indicator ind;
+
+    sql << composeQuery.str(), soci::use(primaryKey), soci::into(foundKey, ind);
+
+    if (sql.got_data())
+    {
+        // Now update it
+        std::stringstream composeQuery;
+        composeQuery << "UPDATE"
+            << " "
+            << tableName
+            << " "
+            << "SET true_or_false = :true_or_false, letter = :letter, phrase = :phrase, number1 = :number1, number2 = :number2"
+            << " "
+            << "WHERE primary_key = :primary_key;";
+
+        sql << composeQuery.str()
+            , soci::use(static_cast<int>(record.trueOrFalse))
+            , soci::use(record.letter)
+            , soci::use(record.phrase)
+            , soci::use(record.number1)
+            , soci::use(record.number2)
+            , soci::use(primaryKey);
+
+        std::cout << "Updated record with primaryKey = " << primaryKey << ": "
+            << record << "\n";
+    }
+    else
+    {
+        std::cout << "No record with primaryKey = " << primaryKey << ", cannot update!\n";
+    }
+}
+
+void Database::UpdateRecord2(soci::session& sql, const std::string& tableName, int primaryKey, const Record2&& record)
+{
+    // First check that a record with such primary key exists
+    std::stringstream composeQuery;
+    composeQuery << "SELECT primary_key FROM"
+        << " "
+        << tableName
+        << " "
+        << "WHERE primary_key = :primary_key"
+        << ";";
+
+    int foundKey;
+    soci::indicator ind;
+
+    sql << composeQuery.str(), soci::use(primaryKey), soci::into(foundKey, ind);
+
+    if (sql.got_data())
+    {
+        // Now update it
+        std::stringstream composeQuery;
+        composeQuery << "UPDATE"
+            << " "
+            << tableName
+            << " "
+            << "SET date_only = :date_only, time_only = :time_only, date_time = :date_time"
+            << " "
+            << "WHERE primary_key = :primary_key;";
+
+        if (isPostgreSql)
+        {
+            std::stringstream ssTimeOnly;
+            ssTimeOnly << std::put_time(&record.timeOnly, "%H:%M:%S");
+
+            sql << composeQuery.str()
+            , soci::use(static_cast<std::tm>(record.dateOnly))
+            , soci::use(ssTimeOnly.str())
+            , soci::use(static_cast<std::tm>(record.dateTime))
+            , soci::use(primaryKey);
+
+        }
+        else
+        {
+            sql << composeQuery.str()
+                , soci::use(static_cast<std::tm>(record.dateOnly))
+                , soci::use(static_cast<std::tm>(record.timeOnly))
+                , soci::use(static_cast<std::tm>(record.dateTime))
+                , soci::use(primaryKey);
+        }
+
+        std::cout << "Updated record with primaryKey = " << primaryKey << ": "
+            << record << "\n";
+    }
+    else
+    {
+        std::cout << "No record with primaryKey = " << primaryKey << ", cannot update!\n";
+    }
+}
+
+void Database::UpdateRecord3(soci::session& sql, const std::string& tableName, int primaryKey, const Record3&& record)
+{
+    // First check that a record with such primary key exists
+    std::stringstream composeQuery;
+    composeQuery << "SELECT primary_key FROM"
+        << " "
+        << tableName
+        << " "
+        << "WHERE primary_key = :primary_key"
+        << ";";
+
+    int foundKey;
+    soci::indicator ind;
+
+    sql << composeQuery.str(), soci::use(primaryKey), soci::into(foundKey, ind);
+
+    if (sql.got_data())
+    {
+        // Now update it
+        std::stringstream composeQuery;
+        composeQuery << "UPDATE"
+            << " "
+            << tableName
+            << " "
+            << "SET phrase = :phrase, number1 = :number1, number2 = :number2"
+            << " "
+            << "WHERE primary_key = :primary_key;";
+
+        sql << composeQuery.str()
+            , soci::use(record.phrase)
+            , soci::use(record.number1)
+            , soci::use(record.number2)
+            , soci::use(primaryKey);
+
+        std::cout << "Updated record with primaryKey = " << primaryKey << ": "
+            << record << "\n";
+    }
+    else
+    {
+        std::cout << "No record with primaryKey = " << primaryKey << ", cannot update!\n";
+    }
+}
+
 void Database::DeleteRecord(soci::session& sql, const std::string& tableName, int primaryKey)
 {
     std::stringstream composeQuery;
