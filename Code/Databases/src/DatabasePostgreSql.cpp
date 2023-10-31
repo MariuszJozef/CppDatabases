@@ -135,8 +135,8 @@ void DatabasePostgreSql::ExecuteQueries1()
         UpdateRecord1(sql, tableNameLowerCase, 3, {false, 'C', "C__c", 303, 30.03});
 
         ReadRecords1(sql, tableNameLowerCase);
-        // ReadRow(sql, tableNameLowerCase, 2);
-        // ReadRow(sql, tableNameLowerCase, 2, {"true_or_false", "letter", "phrase"});
+        ReadRow(sql, tableNameLowerCase, 2);
+        ReadRow(sql, tableNameLowerCase, 2, {"true_or_false", "letter", "phrase"});
     }
     catch (const soci::postgresql_soci_error& e)
     {
@@ -195,8 +195,8 @@ void DatabasePostgreSql::ExecuteQueries2()
         });
 
         ReadRecords2(sql, tableNameLowerCase);
-        // ReadRow(sql, tableNameLowerCase, 3);
-        // ReadRow(sql, tableNameLowerCase, 3, {"date_only", "time_only", "date_time"});
+        ReadRow(sql, tableNameLowerCase, 3);
+        ReadRow(sql, tableNameLowerCase, 3, {"date_only", "time_only", "date_time"});
 
     }
     catch (const soci::postgresql_soci_error& e)
@@ -246,10 +246,10 @@ void DatabasePostgreSql::ExecuteQueries3()
         UpdateRecord3(sql, tableNameLowerCase, 7, {std::nullopt, 77, std::nullopt});
 
         ReadRecords3(sql, tableNameLowerCase);
-        // ReadRow(sql, tableNameLowerCase, 7);
-        // ReadRow(sql, tableNameLowerCase, 6, {"number1", "number2"});
-        // ReadRow(sql, tableNameLowerCase, 2, {"number2"});
-        // ReadRow(sql, tableNameLowerCase, 5, {"number1"});
+        ReadRow(sql, tableNameLowerCase, 7);
+        ReadRow(sql, tableNameLowerCase, 6, {"number1", "number2"});
+        ReadRow(sql, tableNameLowerCase, 2, {"number2"});
+        ReadRow(sql, tableNameLowerCase, 5, {"number1"});
     }
     catch (const soci::postgresql_soci_error& e)
     {

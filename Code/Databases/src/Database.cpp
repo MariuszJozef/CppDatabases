@@ -263,6 +263,148 @@ Record3 Database::ReadRecord3(soci::session& sql, const std::string& tableName, 
     return record;
 }
 
+soci::row Database::ReadRow(soci::session& sql, const std::string& tableName, int primaryKey)
+{
+    soci::row tableRow;
+    std::stringstream composeQuery;
+    composeQuery << "SELECT * FROM"
+        << " "
+        << tableName
+        << " "
+        << "WHERE primary_key = :primary_key"
+        << ";";
+
+    sql << composeQuery.str(), soci::use(primaryKey), soci::into(tableRow);
+    
+    if (sql.got_data())
+    {
+        PrintTableRow(tableRow);
+    }
+    else
+    {
+        std::cout << "No record with primaryKey = " << primaryKey << ", cannot read!\n";
+    }
+
+    return tableRow;
+}
+
+soci::row Database::ReadRow(soci::session& sql, const std::string& tableName, int primaryKey, const std::vector<std::string>& columnName)
+{
+    soci::row tableRow;
+    std::stringstream composeQuery;
+    composeQuery << "SELECT ";
+
+    for (auto it = columnName.begin(); it != columnName.end(); ++it)
+    {
+        // SELECT columnName1, columnName2 FROM tableName ...
+        composeQuery << *it << (it != std::prev(columnName.end()) ? ", " : " ");
+    }
+
+    composeQuery << "FROM"
+        << " "
+        << tableName
+        << " "
+        << "WHERE primary_key = :primary_key"
+        << ";";
+
+    sql << composeQuery.str(), soci::use(primaryKey), soci::into(tableRow);
+    
+    if (sql.got_data())
+    {
+        PrintTableRow(tableRow);
+    }
+    else
+    {
+        std::cout << "No record with primaryKey = " << primaryKey << ", cannot read!\n";
+    }
+
+    return tableRow;
+}
+
+void Database::PrintTableRow(const soci::row& tableRow)
+{
+    for (std::size_t col = 0; col != tableRow.size(); ++col)
+    {
+        const soci::column_properties & props = tableRow.get_properties(col);
+    
+        switch (props.get_data_type())
+        {
+        case soci::dt_string:
+        {
+            std::optional<std::string> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                ? tableRow.get<std::string>(col) : std::optional<std::string>{};
+
+            std::cout << "dt_string: " << props.get_name() << " = " << colData << '\n';
+            break;
+        }
+        case soci::dt_double:
+        {
+            std::optional<double> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                ? tableRow.get<double>(col) : std::optional<double>{};
+
+            std::cout << "dt_double: " << props.get_name() << " = " << colData << '\n';
+            break;
+        }
+        case soci::dt_integer:
+        {
+            if (props.get_name() == "trueOrFalse" 
+                || props.get_name() == "true_or_false")
+            {
+                std::optional<int> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                ? tableRow.get<int>(col) : std::optional<int>{};
+
+                std::cout << "dt_integer: " << props.get_name() << " = " 
+                    << std::boolalpha << static_cast<bool>(colData) << '\n';
+            }
+            else
+            {
+                std::optional<int> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                ? tableRow.get<int>(col) : std::optional<int>{};
+
+                std::cout << "dt_integer: " << props.get_name() << " = " << colData << '\n';
+            }
+            break;
+        }
+        case soci::	dt_date:
+        {
+            if (props.get_name() == "date_only")
+            {
+                std::optional<std::tm> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                    ? tableRow.get<std::tm>(col) : std::optional<std::tm>{};
+
+                // if (colData.has_value())
+                //     std::optional<Tm> colData2 = Tm {colData.value(), IsItDateOrTime::dateOnly};
+
+                // std::cout << "dt_date: " << props.get_name() << " = " << colData2 << '\n';
+                std::cout << "dt_date: " << props.get_name() << " = " 
+                    << Tm {colData.value(), IsItDateOrTime::dateOnly} << '\n';
+            }
+            else if (props.get_name() == "time_only")
+            {
+                std::optional<std::tm> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                    ? tableRow.get<std::tm>(col) : std::optional<std::tm>{};
+
+                std::cout << "dt_date: " << props.get_name() << " = " 
+                    << Tm {colData.value(), IsItDateOrTime::timeOnly} << '\n';
+            }
+            else if (props.get_name() == "dateTime" 
+                    || props.get_name() == "datetime"
+                    || props.get_name() == "date_time")
+            {
+                std::optional<std::tm> colData = tableRow.get_indicator(props.get_name()) == soci::i_ok 
+                    ? tableRow.get<std::tm>(col) : std::optional<std::tm>{};
+
+                std::cout << "dt_date: " << props.get_name() << " = " 
+                    << Tm {colData.value(), IsItDateOrTime::dateAndTime} << '\n';
+            }
+            break;
+        }
+        default:
+            std::cerr << "Error: PrintTableRow: unknown type!\n";
+        }
+    }
+}
+
 void Database::UpdateRecord1(soci::session& sql, const std::string& tableName, int primaryKey, const Record1&& record)
 {
     // First check that a record with such primary key exists

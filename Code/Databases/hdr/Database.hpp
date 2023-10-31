@@ -39,10 +39,14 @@ protected:
     Record2 ReadRecord2(soci::session& sql, const std::string& tableName, int primaryKey);
     Record3 ReadRecord3(soci::session& sql, const std::string& tableName, int primaryKey);
 
+    soci::row ReadRow(soci::session& sql, const std::string& tableName, int primaryKey);
+    soci::row ReadRow(soci::session& sql, const std::string& tableName, int primaryKey, const std::vector<std::string>& columnName);
+    void PrintTableRow(const soci::row& tableRow);
+    
     void UpdateRecord1(soci::session& sql, const std::string& tableName, int primaryKey, const Record1&& record);
     void UpdateRecord2(soci::session& sql, const std::string& tableName, int primaryKey, const Record2&& record);
     void UpdateRecord3(soci::session& sql, const std::string& tableName, int primaryKey, const Record3&& record);
-    
+
     void TruncateTable(soci::session& sql, const std::string& tableName);
     void DropTable(soci::session& sql, const std::string& tableName);
     void DeleteRecord(soci::session& sql, const std::string& tableName, int primaryKey);
