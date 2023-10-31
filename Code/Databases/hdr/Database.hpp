@@ -21,6 +21,13 @@ protected:
     virtual void CreateTableForRecord2(soci::session& sql, const std::string& tableName) = 0;
     virtual void CreateTableForRecord3(soci::session& sql, const std::string& tableName) = 0;
 
+    void CreateRecords1(soci::session& sql, const std::string& tableName, const std::vector<Record1>& records);
+    void CreateRecords2(soci::session& sql, const std::string& tableName, const std::vector<Record2>& records);
+    void CreateRecords3(soci::session& sql, const std::string& tableName, const std::vector<Record3>& records);
+    
+    void CreateRecord1(soci::session& sql, const std::string& tableName, const Record1&& record);
+    void CreateRecord2(soci::session& sql, const std::string& tableName, const Record2&& record);
+    void CreateRecord3(soci::session& sql, const std::string& tableName, const Record3&& record);
 
     void TruncateTable(soci::session& sql, const std::string& tableName);
     void DropTable(soci::session& sql, const std::string& tableName);

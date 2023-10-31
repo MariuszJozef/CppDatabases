@@ -5,6 +5,11 @@
 namespace Code::Databases
 {
 
+DatabasePostgreSql::DatabasePostgreSql()
+{
+    Database::isPostgreSql = true;
+}
+
 void DatabasePostgreSql::CreateDatabase(soci::session& sql, const std::string& databaseName)
 {
     std::stringstream composeQuery;
@@ -115,6 +120,10 @@ void DatabasePostgreSql::ExecuteQueries1()
         DropTable(sql, tableNameLowerCase);
         CreateTableForRecord1(sql, tableNameLowerCase);
         TruncateTable(sql, tableNameLowerCase);
+
+        CreateRecords1(sql, tableNameLowerCase, seedRecords1);
+        CreateRecord1(sql, tableNameLowerCase, {false, 'f', "FFff", 6, 6.6});
+        CreateRecord1(sql, tableNameLowerCase, {false, 'g', "GGgg", 7, 7.7});
         
     }
     catch (const soci::postgresql_soci_error& e)
@@ -147,6 +156,19 @@ void DatabasePostgreSql::ExecuteQueries2()
         CreateTableForRecord2(sql, tableNameLowerCase);
         TruncateTable(sql, tableNameLowerCase);
 
+        CreateRecords2(sql, tableNameLowerCase, seedRecords2);
+        CreateRecord2(sql, tableNameLowerCase, {
+            {2006, 6, 16},
+            {6, 36, 56, -1},
+            {2006, 6, 16, 6, 36, 56}
+        });
+        
+        CreateRecord2(sql, tableNameLowerCase, {
+            {2007, 7, 17},
+            {7, 37, 57, -1},
+            {2007, 7, 17, 7, 37, 57}
+        });
+
     }
     catch (const soci::postgresql_soci_error& e)
     {
@@ -177,6 +199,11 @@ void DatabasePostgreSql::ExecuteQueries3()
         DropTable(sql, tableNameLowerCase);
         CreateTableForRecord3(sql, tableNameLowerCase);
         TruncateTable(sql, tableNameLowerCase);
+
+        CreateRecords3(sql, tableNameLowerCase, seedRecords3);
+        CreateRecord3(sql, tableNameLowerCase, {"Iii", 99, std::nullopt});
+        CreateRecord3(sql, tableNameLowerCase, {"Jjj", std::nullopt, 10.10});
+        CreateRecord3(sql, tableNameLowerCase, {std::nullopt, 11, 11.11});
 
     }
     catch (const soci::postgresql_soci_error& e)

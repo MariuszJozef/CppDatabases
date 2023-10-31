@@ -113,6 +113,10 @@ void DatabaseMySql::ExecuteQueries1()
         DropTable(sql, tableName);
         CreateTableForRecord1(sql, tableName);
         TruncateTable(sql, tableName);
+
+        CreateRecords1(sql, tableName, seedRecords1);
+        CreateRecord1(sql, tableName, {false, 'f', "FFff", 6, 6.6});
+        CreateRecord1(sql, tableName, {false, 'g', "GGgg", 7, 7.7});
     }
     catch (const soci::mysql_soci_error& e)
     {
@@ -139,6 +143,19 @@ void DatabaseMySql::ExecuteQueries2()
         CreateTableForRecord2(sql, tableName);
         TruncateTable(sql, tableName);
 
+        CreateRecords2(sql, tableName, seedRecords2);
+        CreateRecord2(sql, tableName, {
+            {2006, 6, 16},
+            {6, 36, 56, -1},
+            {2006, 6, 16, 6, 36, 56}
+        });
+        
+        CreateRecord2(sql, tableName, {
+            {2007, 7, 17},
+            {7, 37, 57, -1},
+            {2007, 7, 17, 7, 37, 57}
+        });
+
     }
     catch (const soci::mysql_soci_error& e)
     {
@@ -164,6 +181,11 @@ void DatabaseMySql::ExecuteQueries3()
         DropTable(sql, tableName);
         CreateTableForRecord3(sql, tableName);
         TruncateTable(sql, tableName);
+
+        CreateRecords3(sql, tableName, seedRecords3);
+        CreateRecord3(sql, tableName, {"Iii", 99, std::nullopt});
+        CreateRecord3(sql, tableName, {"Jjj", std::nullopt, 10.10});
+        CreateRecord3(sql, tableName, {std::nullopt, 11, 11.11});
     }
     catch (const soci::mysql_soci_error& e)
     {

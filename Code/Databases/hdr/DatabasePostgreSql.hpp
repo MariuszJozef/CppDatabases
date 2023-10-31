@@ -7,6 +7,8 @@ namespace Code::Databases
 class DatabasePostgreSql final : public Database
 {
 public:
+    DatabasePostgreSql();
+
     void ExecuteQueries1() override;
     void ExecuteQueries2() override;
     void ExecuteQueries3() override;
