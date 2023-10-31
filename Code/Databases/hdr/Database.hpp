@@ -29,6 +29,16 @@ protected:
     void CreateRecord2(soci::session& sql, const std::string& tableName, const Record2&& record);
     void CreateRecord3(soci::session& sql, const std::string& tableName, const Record3&& record);
 
+    int CountRecords(soci::session& sql, const std::string& tableName);
+
+    std::vector<Record1> ReadRecords1(soci::session& sql, const std::string& tableName);
+    std::vector<Record2> ReadRecords2(soci::session& sql, const std::string& tableName);
+    std::vector<Record3> ReadRecords3(soci::session& sql, const std::string& tableName);
+    
+    Record1 ReadRecord1(soci::session& sql, const std::string& tableName, int primaryKey);
+    Record2 ReadRecord2(soci::session& sql, const std::string& tableName, int primaryKey);
+    Record3 ReadRecord3(soci::session& sql, const std::string& tableName, int primaryKey);
+
     void TruncateTable(soci::session& sql, const std::string& tableName);
     void DropTable(soci::session& sql, const std::string& tableName);
     void DeleteRecord(soci::session& sql, const std::string& tableName, int primaryKey);

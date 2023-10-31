@@ -124,6 +124,13 @@ void DatabasePostgreSql::ExecuteQueries1()
         CreateRecords1(sql, tableNameLowerCase, seedRecords1);
         CreateRecord1(sql, tableNameLowerCase, {false, 'f', "FFff", 6, 6.6});
         CreateRecord1(sql, tableNameLowerCase, {false, 'g', "GGgg", 7, 7.7});
+
+        ReadRecords1(sql, tableNameLowerCase);
+        ReadRecord1(sql, tableNameLowerCase, 2);
+
+        CountRecords(sql, tableNameLowerCase);
+        DeleteRecord(sql, tableNameLowerCase, 1);
+        CountRecords(sql, tableNameLowerCase);
         
     }
     catch (const soci::postgresql_soci_error& e)
@@ -169,6 +176,13 @@ void DatabasePostgreSql::ExecuteQueries2()
             {2007, 7, 17, 7, 37, 57}
         });
 
+        ReadRecords2(sql, tableNameLowerCase);
+        ReadRecord2(sql, tableNameLowerCase, 2);
+
+        CountRecords(sql, tableNameLowerCase);
+        DeleteRecord(sql, tableNameLowerCase, 2);
+        CountRecords(sql, tableNameLowerCase);
+
     }
     catch (const soci::postgresql_soci_error& e)
     {
@@ -204,6 +218,13 @@ void DatabasePostgreSql::ExecuteQueries3()
         CreateRecord3(sql, tableNameLowerCase, {"Iii", 99, std::nullopt});
         CreateRecord3(sql, tableNameLowerCase, {"Jjj", std::nullopt, 10.10});
         CreateRecord3(sql, tableNameLowerCase, {std::nullopt, 11, 11.11});
+
+        ReadRecords3(sql, tableNameLowerCase);
+        ReadRecord3(sql, tableNameLowerCase, 2);
+
+        CountRecords(sql, tableNameLowerCase);
+        DeleteRecord(sql, tableNameLowerCase, 3);
+        CountRecords(sql, tableNameLowerCase);
 
     }
     catch (const soci::postgresql_soci_error& e)

@@ -117,6 +117,13 @@ void DatabaseMySql::ExecuteQueries1()
         CreateRecords1(sql, tableName, seedRecords1);
         CreateRecord1(sql, tableName, {false, 'f', "FFff", 6, 6.6});
         CreateRecord1(sql, tableName, {false, 'g', "GGgg", 7, 7.7});
+
+        ReadRecords1(sql, tableName);
+        ReadRecord1(sql, tableName, 2);
+
+        CountRecords(sql, tableName);
+        DeleteRecord(sql, tableName, 1);
+        CountRecords(sql, tableName);
     }
     catch (const soci::mysql_soci_error& e)
     {
@@ -156,6 +163,13 @@ void DatabaseMySql::ExecuteQueries2()
             {2007, 7, 17, 7, 37, 57}
         });
 
+        ReadRecords2(sql, tableName);
+        ReadRecord2(sql, tableName, 2);
+
+        CountRecords(sql, tableName);
+        DeleteRecord(sql, tableName, 2);
+        CountRecords(sql, tableName);
+
     }
     catch (const soci::mysql_soci_error& e)
     {
@@ -186,6 +200,13 @@ void DatabaseMySql::ExecuteQueries3()
         CreateRecord3(sql, tableName, {"Iii", 99, std::nullopt});
         CreateRecord3(sql, tableName, {"Jjj", std::nullopt, 10.10});
         CreateRecord3(sql, tableName, {std::nullopt, 11, 11.11});
+
+        ReadRecords3(sql, tableName);
+        ReadRecord3(sql, tableName, 2);
+
+        CountRecords(sql, tableName);
+        DeleteRecord(sql, tableName, 3);
+        CountRecords(sql, tableName);
     }
     catch (const soci::mysql_soci_error& e)
     {
