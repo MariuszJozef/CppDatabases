@@ -92,6 +92,71 @@ sql << "DELETE FROM"
     << "WHERE primary_key = :primary_key";
 ```
 
+## Slight differences in the CREATE TABLE statement for each database
+
+### SQLite3
+
+```
+sql << "CREATE TABLE IF NOT EXISTS"
+    << " "
+    << tableName
+    << " ("
+    << "primary_key         INTEGER PRIMARY KEY"
+    << ", "
+    << "true_or_false       BOOLEAN             NOT NULL"
+    << ", "
+    << "letter              CHARACTER(1)        NOT NULL"
+    << ", "
+    << "phrase              TEXT                NOT NULL"
+    << ", "
+    << "number1             INT                 NOT NULL"
+    << ", "
+    << "number2             REAL                NOT NULL"
+    << ")";
+```
+
+### MySql
+
+```
+sql << "CREATE TABLE IF NOT EXISTS"
+    << " "
+    << tableName
+    << " ("
+    << "primary_key         INT AUTO_INCREMENT PRIMARY KEY"
+    << ", "
+    << "true_or_false       BOOLEAN             NOT NULL"
+    << ", "
+    << "letter              CHARACTER(1)        NOT NULL"
+    << ", "
+    << "phrase              TEXT                NOT NULL"
+    << ", "
+    << "number1             INT                 NOT NULL"
+    << ", "
+    << "number2             REAL                NOT NULL"
+    << ")";
+```
+
+### PostgreSql
+
+```
+sql << "CREATE TABLE IF NOT EXISTS"
+    << " "
+    << tableName
+    << " ("
+    << "primary_key         SERIAL PRIMARY KEY"
+    << ", "
+    << "true_or_false       BOOLEAN"
+    << ", "
+    << "letter              CHARACTER(1)        NOT NULL"
+    << ", "
+    << "phrase              TEXT                NOT NULL"
+    << ", "
+    << "number1             INT                 NOT NULL"
+    << ", "
+    << "number2             REAL                NOT NULL"
+    << ")";
+```
+
 ## Commands to build, run, and test the program
 
 ```
@@ -120,7 +185,7 @@ systemctl stop mysqld
 systemctl stop postgresql
 ```
 
-SQLite3 is not a server process; so there is nothing to start. Commands to start MS SQL Server will be provided soon, once it is successfully installed. 
+SQLite3 is not a server process, so there is nothing to start. Commands to start MS SQL Server will be provided soon, once it is successfully installed. 
 
 **N.B.**
 
@@ -182,9 +247,9 @@ Data from tables can be retrieved and stored:
 - individual rows into struct variables
 - whole tables or multiple rows into vectors or row structs.
 
-Skeleton of unit tests is in place and works. The meat of tests will be completed very soon ;~)
+Skeleton of unit tests is in place and works. The "meat" of tests will be completed very soon ;~)
 
-In the meantime, when the program is run it prints out the data retrieved from tables
+In the meantime, when the program is run it prints out the data retrieved from tables as shown below.
 
 ### Data retrieved from SQLite3 tables
 
@@ -195,5 +260,7 @@ In the meantime, when the program is run it prints out the data retrieved from t
 ![ScreenShot6b](ScreenShots/ScreenShot6b.png)
 
 ### Data retrieved from PostgreSql tables
+
+Null values are not printed, that's why some would-be values are omitted in the printout.
 
 ![ScreenShot6c](ScreenShots/ScreenShot6c.png)
