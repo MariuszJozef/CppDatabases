@@ -160,8 +160,8 @@ sql << "CREATE TABLE IF NOT EXISTS"
 ## Commands to build, run, and test the program
 
 ```
-git clone --depth 1 https://github.com/MariuszJozef/DatabaseGuiIntegration.git
-cd DatabaseGuiIntegration
+git clone --depth 1 https://github.com/MariuszJozef/CppDatabases.git
+cd CppDatabases
 ```
 
 Start MySql and PostgreSql servers, make sure their status is "active (running)":
