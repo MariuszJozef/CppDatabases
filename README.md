@@ -2,12 +2,13 @@
 
 ## Table records for standard C++ data types
 
-It is shown here how - with only C++ - to write/read data into/from prominent databases such as: SQLite3, MySQL, PostgreSql, MS SQL Server. The focus is to exemplify CRUD operations: 
+It is shown here how to write/read data into/from prominent databases such as SQLite3, MySQL, PostgreSql, MS SQL Server. The focus is to exemplify CRUD operations:
 - create (i.e. insert)
 - read
 - update
 - delete 
-on basic C++ data type:
+
+on standard  C++ data types:
 - bool
 - char
 - std::string
@@ -15,7 +16,7 @@ on basic C++ data type:
 - double
 - std::tm (i.e. date, time, and date-time or timestamp).
 
-Null values can be entered or read into/from databases with the help of std::optional. Tables are defined by the following structs with represent a row of a table; primary key is automatically incremented and so it is not a struct field:
+Null values can be entered or read into/from databases with the help of `std::optional`. Tables are defined by the following structs with represent a row of a table; primary key is automatically incremented and so it is not a struct field:
 ```
 struct Record1 final
 {
@@ -51,7 +52,7 @@ soci::session sql(soci::sqlite3, databaseName);
 soci::session sql(soci::mysql, "db=mysql user=root");
 soci::session sql(soci::postgresql, "dbname=postgres");
 ```
-There is a minor difference for MS SQL Server, but the main difficulty with the latter is to install it on Linux (it requires its own Docker container), and has not yet been attempted as of this writing. Therefore CRUD operations for MS SQL Server are temporarily blank, but will be filled in shortly - and similarly to the other databases which already work.
+There is a minor difference for MS SQL Server, but the main difficulty with the latter is to install it on Linux (it requires its own Docker container), and has not yet been attempted as of this writing. Therefore CRUD operations for MS SQL Server are temporarily blank, but will be filled in shortly - apart from the connect statement, the syntax is similar to what is already presented for the other working databases.
 
 ## Pleasant user interface for CRUD operations
 
@@ -119,6 +120,8 @@ systemctl stop mysqld
 systemctl stop postgresql
 ```
 
+SQLite3 is not a server process; so there is nothing to start. Commands to start MS SQL Server will be provided soon, once it is successfully installed. 
+
 **N.B.**
 
 For now SOCI can only be linked as a shared library, there are link errors when linking it statically, therefore **do not** set the flag:
@@ -129,8 +132,6 @@ cmake --preset NMake-Msvc-Debug
 cmake --build --preset NMake-Msvc-Debug
 cmake --build --preset NMake-Msvc-Debug --target run
 cmake --build --preset NMake-Msvc-Debug --target runUnitTest
-cmake --build --preset NMake-Msvc-Debug --target runIntegrationTest
-cmake --build --preset NMake-Msvc-Debug --target runAllTests
 cmake --build --preset NMake-Msvc-Debug --target runAll
 ctest --preset NMake-Msvc-Debug --output-on-failure
 ```
@@ -140,8 +141,6 @@ cmake --preset Make-Gnu-Debug
 cmake --build --preset Make-Gnu-Debug
 cmake --build --preset Make-Gnu-Debug --target run
 cmake --build --preset Make-Gnu-Debug --target runUnitTest
-cmake --build --preset Make-Gnu-Debug --target runIntegrationTest
-cmake --build --preset Make-Gnu-Debug --target runAllTests
 cmake --build --preset Make-Gnu-Debug --target runAll
 ctest --preset Make-Gnu-Debug --output-on-failure
 ```
@@ -151,15 +150,13 @@ cmake --preset Make-Clang-Debug
 cmake --build --preset Make-Clang-Debug
 cmake --build --preset Make-Clang-Debug --target run
 cmake --build --preset Make-Clang-Debug --target runUnitTest
-cmake --build --preset Make-Clang-Debug --target runIntegrationTest
-cmake --build --preset Make-Clang-Debug --target runAllTests
 cmake --build --preset Make-Clang-Debug --target runAll
 ctest --preset Make-Clang-Debug --output-on-failure
 ```
 
 ## Confirmation that database tables are filled
 
-At the start of program execution, databases are dropped and created anew, therefore the tables shown below have indeed been filled by this C++ program, and not by manual (or otherwise) SQL statements. NULL values can be seen in the third table for each database below.
+At the start of program execution, databases are dropped and created anew, therefore the tables shown below have indeed been filled by this C++ program, and not by manual/automated SQL statements. NULL values can be seen in the third table for each database below.
 
 ### Data entered into MySql tables
 
@@ -185,7 +182,7 @@ Data from tables can be retrieved and stored:
 - individual rows into struct variables
 - whole tables or multiple rows into vectors or row structs.
 
-Skeleton of unit tests is in place and works. The meat of tests will be completed very soon ;~D
+Skeleton of unit tests is in place and works. The meat of tests will be completed very soon ;~)
 
 In the meantime, when the program is run it prints out the data retrieved from tables
 
