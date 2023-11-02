@@ -192,6 +192,10 @@ SQLite3 is not a server process, so there is nothing to start. Commands to start
 For now SOCI can only be linked as a shared library, there are link errors when linking it statically, therefore **do not** set the flag:
 `-D linkSociAsSharedLibrary=OFF`; it is omitted below and defaults to `ON`.
 
+### Windows, MSVC compiler
+
+Run in *Developer Command Prompt for VS*
+
 ```
 cmake --preset NMake-Msvc-Debug
 cmake --build --preset NMake-Msvc-Debug
@@ -200,6 +204,8 @@ cmake --build --preset NMake-Msvc-Debug --target runUnitTest
 cmake --build --preset NMake-Msvc-Debug --target runAll
 ctest --preset NMake-Msvc-Debug --output-on-failure
 ```
+
+### Linux/Mac GNU compiler
 
 ```
 cmake --preset Make-Gnu-Debug
@@ -210,6 +216,8 @@ cmake --build --preset Make-Gnu-Debug --target runAll
 ctest --preset Make-Gnu-Debug --output-on-failure
 ```
 
+### Linux/Mac Clang compiler
+
 ```
 cmake --preset Make-Clang-Debug
 cmake --build --preset Make-Clang-Debug
@@ -218,6 +226,10 @@ cmake --build --preset Make-Clang-Debug --target runUnitTest
 cmake --build --preset Make-Clang-Debug --target runAll
 ctest --preset Make-Clang-Debug --output-on-failure
 ```
+
+Run `cmake --list-presets all` to see a full list of available presets on your platform, they are named according to the forms
+- for single-config generators: *generator-compiler-buildType*
+- for multi-config generators: *generator-compiler*.
 
 ## Confirmation that database tables are filled
 
