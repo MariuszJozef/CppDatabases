@@ -16,7 +16,7 @@ on standard  C++ data types:
 - double
 - std::tm (i.e. date, time, and date-time or timestamp).
 
-Null values can be entered or read into/from databases with the help of `std::optional`. Tables are defined by the following structs with represent a row of a table; primary key is automatically incremented and so it is not a struct field:
+Null values can be entered or read into/from databases with the help of `std::optional`. Tables are defined by the following structs which represent a row of a table; primary key is automatically incremented and so it is not a struct field:
 ```
 struct Record1 final
 {
